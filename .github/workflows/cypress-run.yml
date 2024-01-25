@@ -23,7 +23,7 @@ on:
         default: 1
 
 env:
-  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY_CW_E2E }}
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
   COMMIT_INFO_BRANCH: ${{ github.event.pull_request.head.ref }}
   COMMIT_INFO_SHA: ${{ github.sha }}
   # COMMIT_INFO_MESSAGE: ${{ github.event.workflow_run.head_commit.message }}
