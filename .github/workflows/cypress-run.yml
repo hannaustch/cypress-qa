@@ -5,7 +5,7 @@ on:
         description: Branch to checkout the repo from
         required: false
         type: string
-        default: master
+        default: main
       tags:
         description: Dashboard tags
         required: false
@@ -23,12 +23,12 @@ on:
         default: 1
 
 env:
-  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY_CW_E2E }}
-  # COMMIT_INFO_BRANCH: ${{ github.event.pull_request.head.ref }}
-  # COMMIT_INFO_SHA: ${{ github.sha }}
-  # COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-  # CYPRESS_PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
-  # CYPRESS_PULL_REQUEST_ID: ${{ github.event.pull_request.number }}
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  COMMIT_INFO_BRANCH: ${{ github.event.pull_request.head.ref }}
+  COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
+  COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
+  CYPRESS_PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
+  CYPRESS_PULL_REQUEST_ID: ${{ github.event.pull_request.number }}
 
 jobs:
   cypress-run:
@@ -39,30 +39,12 @@ jobs:
       image: cypress/browsers:node18.12.0-chrome107
       options: --user 1001
     steps:
-      - name: Echo vars
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Install binaries
+        run: npx cypress install
+      - name: Run the tests
         run: |
-          echo "Hello world"
-          # echo "$COMMIT_INFO_BRANCH"
-          # echo "$COMMIT_INFO_SHA"
-          # echo "$COMMIT_INFO_MESSAGE"
-          # echo "$CYPRESS_PULL_REQUEST_URL"
-          # echo "$CYPRESS_PULL_REQUEST_ID"
-      # - name: Set test suite name
-      #   run: |
-      #     REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}
-      #     echo "CYPRESS_TEST_SUITE_NAME=Regression for ${REPO_NAME}" >> "$GITHUB_ENV"
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
-      # - name: Install dependencies
-      #   run: npm ci --ignore-scripts
-      # - name: Install binaries
-      #   run: npx cypress install
-      # - name: Run the tests
-      #   env:
-      #     COMMIT_INFO_BRANCH: ${{ github.event.pull_request.head.ref }}
-      #     COMMIT_INFO_SHA: ${{ github.sha }}"
-      #     COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-      #     CYPRESS_PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}"
-      #     CYPRESS_PULL_REQUEST_ID: ${{ github.event.pull_request.number }}"
-      #   run: |
-      #       npx cypress run -b chrome --parallel --ci-build-id ${{ github.run_id }} --record -t "${{ inputs.tags }}"
+            npx cypress run -b chrome --parallel --ci-build-id ${{ github.run_id }} --record -t "${{ inputs.tags }}"
