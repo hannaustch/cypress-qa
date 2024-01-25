@@ -41,7 +41,7 @@ jobs:
       options: --user 1001
     steps:
       - name: Echo vars
-          run: |
+        run: |
           echo "${{toJSON(github.event)}}"
           echo "$(git rev-parse --short "$GITHUB_SHA")"
           echo "${{ github.sha }}"
