@@ -42,13 +42,13 @@ jobs:
     steps:
       - name: Echo vars
         run: |
-          echo "Hello world"
-          echo "$COMMIT_INFO_BRANCH"
-          echo "$COMMIT_INFO_SHA"
-          echo "$COMMIT_INFO_MESSAGE"
-          echo "$COMMIT_INFO_MESSAGE_T"
-          echo "$CYPRESS_PULL_REQUEST_URL"
-          echo "$CYPRESS_PULL_REQUEST_ID"
+          echo "${{toJSON(github.event)}}"
+          # echo "$COMMIT_INFO_BRANCH"
+          # echo "$COMMIT_INFO_SHA"
+          # echo "$COMMIT_INFO_MESSAGE"
+          # echo "$COMMIT_INFO_MESSAGE_T"
+          # echo "$CYPRESS_PULL_REQUEST_URL"
+          # echo "$CYPRESS_PULL_REQUEST_ID"
       # - name: Checkout code
       #   uses: actions/checkout@v4
       # - name: Install dependencies
