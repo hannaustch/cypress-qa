@@ -46,11 +46,10 @@ jobs:
       #     echo "$COMMIT_INFO_MESSAGE_T"
       - name: Get Commit Message
         run: |
-          MSG=$(git log --format=%B -n 1 ${{ env.COMMIT_INFO_SHA }})
-          echo "COMMIT_MESSAGE=${MSG}" >> "$GITHUB_ENV"
-      - name: Echo commit message
-        run: |
-          echo "Commit message: ${COMMIT_MESSAGE}"
+          echo "${{ github.event.pull_request.commits }}"
+      # - name: Echo commit message
+      #   run: |
+      #     echo "Commit message: ${COMMIT_MESSAGE}"
       # - name: Check commit msg
       #   run: |
       #     echo "$COMMIT_INFO_SHA"
