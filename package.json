@@ -1,0 +1,31 @@
+{
+  "name": "cypress-qa",
+  "version": "1.0.0",
+  "description": "E2E tests",
+  "main": "index.js",
+  "scripts": {
+    "open": "DEBUG=cypress:server:server cypress open",
+    "open:windows": "set DEBUG=cypress:server:server && cypress open",
+    "quick:test": "cypress run --headless -b chrome --config video=false screenshotOnRunFailure=false",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:verify": "cypress verify",
+    "cy:info": "cypress info",
+    "cy:version": "cypress version"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^16.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@cypress/webpack-preprocessor": "^5.16.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "cypress": "^12.2.0",
+    "cypress-plugin-stripe-elements": "^1.0.2",
+    "eslint": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "fs.promises": "^0.1.2",
+    "lint-staged": "^10.4.0",
+    "moment": "^2.29.4",
+    "prettier": "^1.18.2",
+    "randomstring": "^1.2.3"
+  }
+}
