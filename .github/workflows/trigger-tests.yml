@@ -1,0 +1,12 @@
+on:
+  pull_request:
+      branches:
+        - main
+
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/cypress-run.yml
+    secrets: inherit
+    with:
+      tags: "testingReport"
+      recording: true
