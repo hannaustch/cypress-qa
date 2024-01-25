@@ -5,7 +5,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    specPattern: 'cypress/e2e/*.spec',
+    specPattern: 'cypress/e2e/*.spec.js',
   },
   viewportWidth: 1280,
   viewportHeight: 720,
