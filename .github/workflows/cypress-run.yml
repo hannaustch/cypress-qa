@@ -25,7 +25,7 @@ on:
 env:
   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
   COMMIT_INFO_BRANCH: ${{ github.event.pull_request.head.ref }}
-  COMMIT_INFO_SHA: ${{ github.sha }}
+  #COMMIT_INFO_SHA: ${{ github.sha }}
   # COMMIT_INFO_MESSAGE: ${{ github.event.workflow_run.head_commit.message }}
   # COMMIT_INFO_MESSAGE_T: ${{ github.event.head_commit.message }}
   CYPRESS_PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
@@ -40,15 +40,23 @@ jobs:
       image: cypress/browsers:node18.12.0-chrome107
       options: --user 1001
     steps:
-      # - name: Echo vars
-      #   run: |
-      #     echo "${{toJSON(github.event)}}"
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
-      - name: Install binaries
-        run: npx cypress install
-      - name: Run the tests
+      - name: Echo vars
+          run: |
+          echo "${{toJSON(github.event)}}"
+          echo "$(git rev-parse --short "$GITHUB_SHA")"
+          echo "${{ github.sha }}"
+          echo "$GITHUB_SHA::6"
+          echo COMMIT_INFO_SHA=$(git show -s --pretty=%H) >> $GITHUB_ENV
+          echo "${{ github.event.pull_request.head.sha }}"
+      - name: Check commit msg
         run: |
-            npx cypress run -b chrome --parallel --ci-build-id ${{ github.run_id }} --record -t "${{ inputs.tags }}"
+          echo "$COMMIT_INFO_SHA"
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+      # - name: Install dependencies
+      #   run: npm ci --ignore-scripts
+      # - name: Install binaries
+      #   run: npx cypress install
+      # - name: Run the tests
+      #   run: |
+      #       npx cypress run -b chrome --parallel --ci-build-id ${{ github.run_id }} --record -t "${{ inputs.tags }}"
