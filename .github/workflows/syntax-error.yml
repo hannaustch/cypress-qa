@@ -1,0 +1,15 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  MY-ENV_VAR: 'test'
+
+jobs:
+  syntax-error:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo env var
+        run: |
+          echo ${{ COMMIT_INFO_BRANCH }}
